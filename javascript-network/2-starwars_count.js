@@ -1,17 +1,17 @@
-#!/usr/bin/node
-const request = require('request');
-
-const apiUrl = process.argv[2];
-const characterId = 18;
-
-request.get(apiUrl, { encoding: 'UTF-8' }, (error, response, body) => {
-  if (error) {
-    console.error('Error:', error);
-    return;
-  }
-
-  const films = JSON.parse(body).results;
-  const count = films.filter((film) => film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)).length;
-
-  console.log(`${count}`);
+const req = require("request");
+let char = [];
+const id = 18;
+const url = `https://swapi-api.alx-tools.com/api/films`;
+req.get(url, (error, response, body) => {
+  const movies = JSON.parse(body);
+  const moviesres = movies.results;
+  moviesres.forEach((element) => {
+    // ch.push(element.characters)
+    element.characters.forEach((el) => {
+      if (el.includes(id)) {
+        char.push(el);
+      }
+    });
+  });
+  console.log(char.length);
 });
